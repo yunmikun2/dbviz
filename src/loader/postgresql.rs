@@ -129,6 +129,7 @@ fn tables_query() -> &'static str {
     select table_name, column_name, data_type
       from information_schema.columns
      where table_schema = $1
+     order by table_name, column_name
     "
 }
 
