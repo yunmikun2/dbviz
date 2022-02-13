@@ -27,7 +27,7 @@ $ dbviz --loader postgresql --drawer dot -d database_name > schema.dot
 ### Arch linux
 
 You can install the package from
-[AUR](https://archlinux.org/packages/).
+[AUR](https://aur.archlinux.org/packages/dbviz-git).
 
 ```sh
 $ paru -S dbviz-git
