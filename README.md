@@ -24,6 +24,15 @@ $ dbviz --loader postgresql --drawer dot -d database_name > schema.dot
 
 ## Installation
 
+### Arch linux
+
+You can install the package from
+[AUR](https://archlinux.org/packages/).
+
+```sh
+$ paru -S dbviz-git
+```
+
 ### Build from source
 
 You need [cargo](https://doc.rust-lang.org/cargo/) installed.
