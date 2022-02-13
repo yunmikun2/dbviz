@@ -71,7 +71,6 @@ impl Loader for Conn {
             .into_iter()
             .map(|row| {
                 let relation: Relation = row.try_into().unwrap();
-                // let relation = Relation::try_from(row).unwrap();
                 relation
             })
             .collect();

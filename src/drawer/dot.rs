@@ -38,7 +38,6 @@ where
 
         for relation in schema.relations.iter() {
             write_relation(relation, buffer)?;
-            // buffer.write(b"\n")?;
         }
 
         buffer.write(GRAPH_FOOTER.as_bytes())?;
