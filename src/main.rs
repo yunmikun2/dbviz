@@ -89,7 +89,10 @@ fn main() -> Result<()> {
         }
     };
 
-    let drawer = Dot;
+    let drawer = match opts.drawer {
+        DrawerType::Dot => Dot,
+    };
+
     let schema = loader.load()?;
     let mut buf = stdout();
     drawer.write(&schema, &mut buf)?;
