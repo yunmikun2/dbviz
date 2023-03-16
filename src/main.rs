@@ -52,13 +52,17 @@ struct PgOpts {
         required_if("pg_opts", "postgresql")
     )]
     username: String,
-    #[structopt(
-        short,
-        long,
-        default_value = "postgres",
-        required_if("pg_opts", "postgresql")
-    )]
-    password: String,
+
+    /// User password.
+    ///
+    /// Note that the usage of this option is considered unsafe.
+    ///
+    /// If the option is not provided, it tries to look into
+    /// PGPASSWORD environment variable. In case the method above
+    /// didn't work, it uses "postgres" as a password.
+    #[structopt(short, long, required_if("pg_opts", "postgresql"))]
+    password: Option<String>,
+
     #[structopt(short, long, required_if("pg_opts", "postgresql"))]
     database: Option<String>,
     #[structopt(

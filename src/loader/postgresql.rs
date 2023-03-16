@@ -12,13 +12,14 @@ use postgres::Row;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::convert::{TryFrom, TryInto};
+use std::env;
 
 /// Configuration for the loader.
 pub struct Config {
     pub hostname: String,
     pub database: String,
     pub username: String,
-    pub password: String,
+    pub password: Option<String>,
     pub schema: String,
 }
 
@@ -31,9 +32,16 @@ pub struct Conn {
 impl Conn {
     /// Create the loader.
     pub fn new(config: &Config) -> Result<Self> {
+        let password = config
+            .password
+            .as_ref()
+            .cloned()
+            .or_else(|| resolve_password_from_env())
+            .unwrap_or_else(|| String::from("postgres"));
+
         let pg_client = postgres::Config::new()
             .user(&config.username)
-            .password(&config.password)
+            .password(&password)
             .dbname(&config.database)
             .host(&config.hostname)
             .connect(NoTls)?;
@@ -42,6 +50,10 @@ impl Conn {
         let schema = config.schema.to_string();
         Ok(Self { pg_client, schema })
     }
+}
+
+fn resolve_password_from_env() -> Option<String> {
+    env::var("PGPASSWORD").ok()
 }
 
 impl Loader for Conn {
